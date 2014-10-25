@@ -1,9 +1,14 @@
 module.exports = function(grunt) {
 
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     watch: {
+      options: {
+        livereload: 35729
+      },
       css: {
         files: [
           '**/*.less',
@@ -11,6 +16,9 @@ module.exports = function(grunt) {
           // '**/*.scss'
         ],
         tasks: ['less'] // 'compass' for .sass
+      },
+      livereload: {
+        files: ['*.html', '*.php', 'js/*.js', 'img/*.{png,jpg,jpeg,gif,webp,svg}']
       }
     },
     less: {
@@ -95,15 +103,6 @@ module.exports = function(grunt) {
       }
     }
   });
-
-  // Load the Grunt plugins.
-  grunt.loadNpmTasks('grunt-contrib-compass');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-jshint');;
-  grunt.loadNpmTasks('grunt-contrib-less');
-  grunt.loadNpmTasks('grunt-browser-sync');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // Register the default tasks.
   grunt.registerTask('default', ['uglify', 'browserSync', 'watch']);

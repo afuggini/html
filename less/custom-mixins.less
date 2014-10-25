@@ -1,0 +1,81 @@
+/* ==========================================================================
+   MIXINS
+   ========================================================================== */
+
+.blur(@ratio: 5){
+	filter: progid:DXImageTransform.Microsoft.Blur(strength=@ratio);
+	-webkit-filter: blur(~"@{ratio}px");
+	   -moz-filter: blur(~"@{ratio}px");
+	    -ms-filter: blur(~"@{ratio}px");
+			filter: blur(~"@{ratio}px");
+}
+
+.gray(@tone: 0) {
+  color: darken(#ffffff, @tone);
+}
+.gray-color(@tone: 0) {
+  color: darken(#ffffff, @tone);
+}
+.gray-background(@tone: 0) {
+  background-color: darken(#ffffff, @tone);
+}
+
+.background-size(@cover: cover) {
+  -webkit-background-size: @cover;
+  -moz-background-size: @cover;
+  -o-background-size: @cover;
+  background-size: @cover;
+}
+
+.button-variant-alt(@color; @colorhover; @background; @border; @bghover: darken(@background, 8%); @borderhover: darken(@border, 12%)) {
+  color: @color;
+  background-color: @background;
+  border-color: @border;
+  
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    color: @colorhover;
+    background-color: @bghover;
+        border-color: @borderhover;
+    .box-shadow(none);
+  }
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: @background;
+          border-color: @border;
+    }
+  }
+}
+
+.img-retina-replace(@file-1x; @file-2x; @width-1x; @height-1x; @display: block) {
+  background-image: url("@{file-1x}");
+  display: @display;
+  height: @height-1x;
+  width: @width-1x;
+  .text-hide();
+
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    background-image: url("@{file-2x}");
+    background-size: @width-1x @height-1x;
+  }
+}
